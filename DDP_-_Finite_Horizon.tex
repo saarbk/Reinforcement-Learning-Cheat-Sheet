@@ -1,0 +1,20 @@
+
+Optimal Control Policies
+\begin{greyboxedalgorithm}
+\vspace{-0.5cm}
+\begin{algorithm}[H]
+\caption{Finite-Horizon DP (value iteration)}
+\begin{small}
+
+\begin{algorithmic}[1]
+\STATE Initialize the value function $C_T(s) = c_T(s),\forall s \in S_T$
+\STATE Backward recursion: \\For $t = T - 1, \ldots ,0$  compute: $\forall s \in S_t$ $$ C_t(s) = \min_{a \in A_t} {c_t(s, a) + C_{t+1}(f_t(s, a))}$$
+\STATE Optimal policy: Choose any $\pi^* = (\pi_t^*)$ that satisfies:$\pi_t^*(s)$ $$ \arg \min_{a \in A_t} {c_t(s, a) + C_{t+1}(f_t(s, a))}$$
+\end{algorithmic}
+\end{small}
+\end{algorithm}
+\end{greyboxedalgorithm}
+
+
+\textbf{Proposition:} the following holds for finite-horizon DP value iteration algorithm: $C_0(s) = \min_\pi C_0(\pi; s)$
+

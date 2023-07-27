@@ -1,0 +1,56 @@
+
+
+\begin{thm}
+Given a discount factor $\gamma$, the discounted return in the first $T = \frac{1}{1-\gamma} \log\frac{R_{\text{Max}}}{\epsilon(1-\gamma)}$ time steps, is within $\epsilon$ of the total discounted return.
+\end{thm}
+
+\noindent\df{Off policy:} Input – sequences of $(s, a, r, s')$ where $r \sim R(s, a)$, $s' \sim p(\cdot |s, a)$. Output – complete MDP model i.e. $r(s, a)$, $p(s' |s, a)$.
+\begin{clm}
+Set $m = \frac{R_{\text{Max}}^2}{2\epsilon^2} \log\frac{2|S|\cdot|A|}{\delta}$. For each $(s, a)$ use samples $R_1(s, a), \dots, R_m(s, a)$. Set $\hat{r}(s, a) = \frac{1}{m}\sum_{i=1}^{m}R_i(s, a)$. Then for each $(s, a)$: $P[|\hat{r}(s, a) - r(s, a)| \leq \epsilon] \geq 1 - \frac{\delta}{|S|\cdot|A|}$. Globally: for all $(s, a)$: $P[|\hat{r}(s, a) - r(s, a)| \leq \epsilon] \geq 1 - \delta$.
+\end{clm}
+\df{Influence of reward estimation errors:}
+\textbf{Finite horizon: }Assume for every $(s, a)$ and $t$ we have $|r^t(s, a) - \hat{r}^t(s, a)| \leq \epsilon$ and $|r^T(s) - \hat{r}^T(s)| \leq \epsilon$. Define $V^T_{\pi}(s_0) = E_{\pi,s_0}\left[\sum_{t=0}^{T} r^t(s_t, a_t) + r^T(s_T)\right]$ and $\hat{V}^T_{\pi}(s_0) = E_{\pi,s_0}\left[\sum_{t=0}^{T} \hat{r}^t(s_t, a_t) + \hat{r}^T(s_T)\right]$. Let $\text{error}(\pi) = |V^T_{\pi}(s_0) - \hat{V}^T_{\pi}(s_0)|$. Then for any $\pi \in \Pi_{MD}$ we have $\text{error}(\pi) \leq \epsilon(T + 1)$.
+\noindent\df{Influence of reward estimation errors} \textbf{Discounted return:} Assume for every $(s, a)$ and $t$ we have $|r^t(s, a) - \hat{r}^t(s, a)| \leq \epsilon$. Define $V^{\gamma}_{\pi}(s_0) = E_{\pi,s_0}\left[\sum_{t=0}^{T} \gamma^t r^t(s_t, a_t)\right]$ and $\hat{V}^{\gamma}_{\pi}(s_0) = E_{\pi,s_0}\left[\sum_{t=0}^{T} \gamma^t \hat{r}^t(s_t, a_t)\right]$. Let $\text{error}(\pi) = |V^{\gamma}_{\pi}(s_0) - \hat{V}^{\gamma}_{\pi}(s_0)|$. Then for any $\pi \in \Pi_{SD}$ we have $\text{error}(\pi) \leq \frac{\epsilon}{1-\gamma}$.
+\noindent\df{Computing approximate optimal policy}
+\textbf{ Finite horizon:} we need to sample $m \geq \frac{R_{\text{Max}}^2}{2\epsilon^2} \log\frac{2|S|\cdot|A|}{\delta}$ for each $RV R^t(s, a)$ ($R^T(s)$ in finite). Given the sample, we compute $\hat{r}^t(s, a)$ ( $\hat{r}^T(s)$ in finite). Now compute $\hat{\pi}^*_{\text{optimal policy}}$ w.r.t the estimated rewards.
+\begin{thm}
+Assume that for $\forall(s, a),t:|r^t(s, a) - \hat{r}^t(s, a)| \leq \epsilon$ ($\forall s: |r^T(s) - \hat{r}^T(s)| \leq \epsilon$ in finite). Then, $V^T_{\pi^*}(s_0) - V^T_{\hat{\pi}^*}(s_0) \leq 2\epsilon(T + 1)$ for finite and $V^{\gamma}_{\pi^*}(s_0) - V^{\gamma}_{\hat{\pi}^*}(s_0) \leq \frac{2\epsilon}{1-\gamma}$ for discounted.
+\end{thm}
+\df{Estimate the transitions:} $\forall(s, a)$ consider $m$ i.i.d transitions $(s, a, s'_i)$ for $i \in [m]$. Then $\hat{p}(s' |s, a) = \frac{|\{i|s'_i = s'\}|}{m}$.
+\begin{thm}
+Let $q_1, q_2$ be distributions. Let $f: S \rightarrow [0, F_{\text{Max}}]$, then $|E_{s\sim q_1}[f(s)] - E_{s\sim q_2}[f(s)]| \leq F_{\text{Max}}\|q_1 - q_2\|_1$.
+\end{thm}
+\begin{clm}
+$\|z^TM\|_1 \leq \|z\|_1\|M\|_{\infty,1}$ where $z \in \mathbb{R}^n, M \in \mathbb{R}^{n,n}$ and $\|M\|_{\infty,1} = \max_i \sum_j |M[i,j]|$.
+\end{clm}
+
+\begin{cor} For a distribution $q$ and $|M1_{i,j} - M2_{i,j}| \leq \alpha$ ($\|q\|_1 = 1$, $\|M1 - M2\|_{\infty,1} \leq \alpha|S|$) it holds $\|q^T(M1 - M2)\|_1 \leq \alpha|S|$\end{cor}
+\begin{cor}For a row stochastic $M$: $\|M\|_{\infty,1} = 1$, $\|z^TM\|_1 \leq \|z\|_1$\end{cor}
+\begin{thm}Consider two Markov chains $M1, M2$ s.t $\forall i,j: |M1_{i,j} - M2_{i,j}| \leq \alpha$. Let $q^t_i$ be the state distribution after $t$ steps i.e. $q^t_1 = p_0^TM^t_1, q^t_2 = p_0^TM^t_2$, then $\|q^t_1 - q^t_2\|_1 \leq \alpha|S|^t$\end{thm}
+
+
+\begin{deff} Model $\hat{M}$ is an \dfi{$\alpha$-approx } of $M$ if: $\forall (s, a). ((|\hat{r}(s, a) - r(s, a)| \leq \alpha R_{\text{Max}}) \land (\forall s'. |\hat{p}(s'|s, a) - p(s'|s, a)| \leq \alpha))$\end{deff}
+
+\begin{thm} Let $\hat{M}$ be an \dfi{$\alpha$-approx }of $M$. If $\alpha = O\left( \frac{\varepsilon}{R_{\text{Max}}|S|T^2} \right)$ then $\forall \pi \in MD. |V^T_{\pi}(s_0 ; M) - V^T_{\pi}(s_0 ; \hat{M})| \leq \varepsilon$ where $T$ is finite\end{thm}
+
+
+\begin{thm} Let $\hat{M}$ be an \dfi{$\alpha$-approx } of $M$. If $\alpha = O\left( \frac{\varepsilon(1-\gamma)^2}{R_{\text{Max}}|S| \log_2\left(\frac{R_{\text{Max}}}{\varepsilon(1-\gamma)}\right)} \right)$ then $\forall \pi \in MD. |V^\gamma_{\pi}(s_0 ; M) - V^\gamma_{\pi}(s_0 ; \hat{M})| \leq \varepsilon$\end{thm}
+\begin{thm} Sample each $(s, a)$ for $m$ times where $m = \frac{1}{\alpha^2} \log\left(\frac{|S^2| |A|}{\delta}\right)$ then w.p $(1 - \delta)$ all errors $\leq \alpha$. $m = O\left( \frac{R_{\text{Max}}^2 |S|^2 T^4}{\varepsilon^2} \log\left(\frac{|S||A|}{\delta}\right) \right)$ for finite horizon, $m = O\left( \frac{R_{\text{Max}}^2 |S|^2}{\varepsilon^2 (1-\gamma)^4} \log\left(\frac{|S||A|}{\delta}\log_2\left(\frac{R_{\text{Max}}}{\varepsilon(1-\gamma)}\right)\right) \right)$ for discounted
+Next, build observed MDP $\hat{M}$. Solve for the optimal policy $\hat{\pi}_*$ in $\hat{M}$. This is a $2\varepsilon$-optimal policy $V_* - V_{\hat{\pi}_*} \leq 2\varepsilon$\end{thm}
+\begin{greyboxedalgorithm}
+\vspace{-0.5cm}
+\begin{algorithm}[H]
+\caption{Approximate V.I  }
+\begin{footnotesize}
+\begin{algorithmic}[1]
+\STATE Let $V_0 = 0$. 
+\STATE \textbf{for} $n = 0,\ldots N$:
+   \begin{align*} \hat{V}_{n+1}(s) = \max_{a \in A} \{\hat{r}(s, a) + \gamma \frac{1}{m} \sum_{i=1}^{m} \hat{V}_n(s'_i)\}
+    \end{align*} 
+ where $s'_i \sim p(\bullet |s, a)$ and $\hat{r}= \frac{1}{m} \sum_{i=1}^{m} r_i$.
+\end{algorithmic}
+\end{footnotesize}
+\end{algorithm}
+\end{greyboxedalgorithm}
+\begin{thm}
+ For $m = O\left( \frac{R_{\text{Max}}^2}{\varepsilon^2} \log \left(N|S||A|/\delta\right) \right)$ w.p $(1 - \delta)$ $\forall n \leq N$ and $(s, a): |E[\hat{V}_n(s')] - \frac{1}{m}\sum_{i=1}^{m} \hat{V}_n(s'_i)| \leq \varepsilon$ and $|\hat{r}(s, a) - r(s, a)| \leq \varepsilon$.\end{thm} \df{GAIN:} in the dependency of $|S|$. \df{LOSE:} bound only for optimal policy

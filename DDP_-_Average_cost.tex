@@ -1,0 +1,28 @@
+
+Avg cost criteria: $C_{avg}^\pi = \lim_{T \rightarrow \infty} \frac{1}{T} \sum_{t=0}^{T-1} c_t(s_t, a_t)$. The aim is to minimize $E[C_{avg}^\pi]$.
+
+\begin{clm} for a deterministic stationary policy, the policy converges to a simple cycle, and the avg cost is the avg cost of the edges on the cycle\end{clm}
+
+\df{Minimum Avg Cost Cycle:} Given a directed graph $G(V, E)$ ,let $\Omega$ be the collection of all cycles in $G(V, E)$. For each cycle $\omega = (v_1, \ldots , v_k)$, we define $c(\omega) = \sum_{i=1}^{k} c(v_i, v_{i+1})$, where $(v_i, v_{i+1})$ is the $i^{th}$ edge in the cycle $\omega$. Let $\mu(\omega) = \frac{c(\omega)}{k}$. The minimum avg cost cycle is $\mu^* = \min_{\omega \in \Omega} \mu(\omega).$ $(|V| = n)$
+
+\begin{thm} For any DDP the optimal avg cost is $\mu^*$, and the policy is $\pi_\omega$ that cycles around a simple cycle of avg cost $\mu^*$, where $\mu^*$ is the minimum avg cost cycle\end{thm}
+\begin{deff}
+State $i$ is \dfi{recurrent} if $\mathbb{P}(X_t = i \text{ for some } t \geq 1 | X_0 = i) = 1$. O.W, the state is transient.\end{deff}
+\begin{clm}
+State $i$ is transient if and only if $\sum_{m=1}^\infty \mathbb{P}_i^m < \infty$.
+Recurrence is a class property.
+If states $i$ and $j$ are in the same class, then $\mathbb{P}(X_t = j \text{ for some } t \geq 1 | X_0 = i) = 1$.
+Let $T_i$ be the return time to state $i$ (i.e., the number of stages required for $(X_t)$ starting from state $i$ to first return to $i$). If $i$ is a recurrent state, then $\mathbb{P}(T_i < \infty) = 1$.
+State $i$ is positive recurrent if $\mathbb{E}(T_i) < \infty$, and null recurrent if $\mathbb{E}(T_i) = \infty$. If the state space $X$ is finite, all recurrent states are positive recurrent.\end{clm}
+
+\begin{thm}
+The probability vector $\mu = (\mu_i)$ is an invariant/stationary distribution for the Markov chain if $\mu^\top P = \mu^\top$, namely $\forall j, \mu_j = \sum_i \mu_i p_{ij}$.
+The probability vector $\mu = (\mu_i)$ is an invariant/stationary distribution for the Markov chain if $\mu^\top P = \mu^\top$, namely $\forall j, \mu_j = \sum_i \mu_i p_{ij}$.\end{thm}
+
+\begin{thm}
+Let $(X_t)$ be an irreducible and aperiodic Markov chain over a finite state space $X$ with transition matrix $P$. Then there is a unique distribution $\mu$ such that $\mu^\top P = \mu^\top > 0$. Moreover, for any $j \in X$, we have $\mu_j = \frac{1}{\mathbb{E}[T_j]}$ (on average, state $i$ appears every $\mathbb{E}[T_j] < \infty$ steps). Furthermore, all states are positive recurrent. If the Markov chain is over a countable state space, then all states are either positive/null recurrent or transient\end{thm}
+
+\begin{deff}
+The \dfi{Total Variation distance} between distributions $D_1$ and $D_2$ is defined as $||D_1 - D_2||_{TV} = \sum_{x \in X} |D_1(x) - D_2(x)|$.
+The mixing time is the smallest $m$ such that $||s_0^\top P^m - \mu||_{TV} \leq \frac{1}{4} ||s_0 - \mu||_{TV}$ where $s_0$ is the initial state distribution and $\mu$ the steady-state distribution. For $k \geq m$, we have $||s_0^\top P^k - \mu||_{TV} \leq \frac{1}{4^k} ||s_0 - \mu||_{TV}$.\end{deff}
+

@@ -1,0 +1,19 @@
+
+\df{Markov’s inequality:} $\forall$ non-negative random variable $X$ and $a > 0$, it holds that $P[X \geq a] \leq \frac{E[X]}{a}$
+
+\df{Chebyshev’s inequality:} let $X$ be a random variable with $E[X] = \mu < \infty$ and $0 \neq Var(X) = \sigma^2 < \infty$. It holds that $\forall k > 0: P[|X - \mu| \geq k\sigma] \leq \frac{1}{k^2}$
+\df{Chernoff bound (Hoeffding inequality):} let $R_1, ..., R_m$ be $m$ i.i.d samples of a RV $R \in [0,1]$. Let $\mu = E[R]$, $\hat{\mu}= \frac{1}{m} \sum_{i=1}^{m} Ri$. For any $\epsilon \in (0,1)$:
+\begin{align*}
+P[|\mu - \hat{\mu}| > \epsilon] &\leq 2e^{-2\epsilon^2m}\\
+P[\hat{\mu} \leq (1 - \epsilon)\mu] &\leq e^{-\frac{m\epsilon^2}{2}}\\
+P[\hat{\mu} \geq (1 + \epsilon)\mu] &\leq e^{-\frac{m\epsilon^2}{3}}
+\end{align*}
+\df{McDiarmid’s inequality:} let domain $X$, $f:X^n \rightarrow R$, $c_i = \max_{x,x_i,x_i'}|f(x_1, ..., x_i, ..., x_n) - f(x_1, ..., x_i',..., x_n)|$ then: $P[|f(x) - E[f(x)]| \geq \epsilon] \leq 2e^{-\frac{2\epsilon^2}{\sum_{i=1}^{n} c_i^2}}$
+\df{Corollary:} set $f = \bar{X} = \frac{1}{n} \sum_{i=1}^{n} x_i$ where $x_i \in [0,1]$ then $c_i = \frac{1}{n}$ and $P[|\bar{X} - E[\bar{X}]| \geq \epsilon] \leq 2e^{-2\epsilon^2n}$
+\df{Corollary:} set $f = wavg(x_1, ..., x_n) = \sum_{i=1}^{n} \beta_i x_i$ where $x_i \in [0,1]$ then $c_i = \beta_i$ and $P[|wavg(X) - E[wavg(X)]| \geq \epsilon] \leq 2e^{-\frac{2\epsilon^2}{\sum_{i=1}^{n} \beta_i^2}}$
+\df{Exponential average:}
+\begin{align*}
+&\hat{\mu}_T = \frac{1}{T} \sum_{i=1}^{T} r_t = \hat{\mu}_{T-1} + \alpha_T (r_T - \hat{\mu}_{T-1}) = \sum_{t=1}^{T} \beta_t r_r 
+\end{align*} where$ \beta_t = \alpha_t \prod_{j=1}^{t-1} (1 - \alpha_j)$
+\df{Integration by parts:} $\int_{a}^{b} u(x)v'(x)dx = [u(x)v(x)]_a^b - \int_{a}^{b} u'(x)v(x)dx$
+\df{Geom:} $\sum_{k=0}^{n} r^k = \frac{1-r^{n+1}}{1-r}$ , $\sum_{k=0}^{\infty} r^k = \frac{1}{1-r}$

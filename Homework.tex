@@ -1,0 +1,37 @@
+
+\begin{itemize}
+\item[1.]Definition of A formal MDP for this problem (i.e., $\mathcal{S} , \mathcal{A} ,\mathcal{P} , \mathcal{R} $ and $s_0$).
+\\ $\mathcal{S}:=\{0,1\dots 2k-1\}$
+\\$ \mathcal{A}:=\{\operatorname{CW},\operatorname{CCW}\}$
+\\ $\mathcal{P}(i\ | \operatorname{CW},i + 1\pmod {2k}):=1$\\
+ $\mathcal{P}(i\ | \operatorname{CCW},i - 1\pmod {2k}):=1$ 
+and $0$ o.w.
+\\ $\mathcal{R}(0,a):=1$ and $0$ o.w.
+\\ $s_0:=\{k\}$
+\item[2.] Optimal policy $\pi^*
+\begin{cases}
+\operatorname{CCW} & \text{for } 0\le s \le k\\
+\operatorname{CW} & \text{otherwise}
+\end{cases}
+$
+\item[3.] After one iteration of the Value Iteration algorithm (where all states start as 0)
+\begin{align*}
+\V^{(1)}_{(0)} =  \underbrace{\mathcal{R}(0, \pi(0))}_{=1}+ \gamma \sum_{s'} p(s' \mid s, \pi(s)) \underbrace{ \V^{(0)}_{(s')}}_{=0}=1\\
+\V^{1}_{(s\neq 0)} =  \underbrace{\mathcal{R}(s, \pi(s))}_{=0}+ \gamma \sum_{s'} p(s' \mid s, \pi(s))\underbrace{ \V^{(0)}_{(s')}}_{=0}=0
+\end{align*}
+
+
+
+
+ 
+\item[4.]After two iterations of the Value Iteration algorithm: \\
+ $\V^{(2)}_{(s=1,2k-1)} =  \underbrace{\mathcal{R}(s, \pi(s))}_{=0}+ \gamma \sum_{s'} p(s' \mid s, \pi(s))\underbrace{ \V^{(0)}_{(s')}}_{\V^1_{(0)}=1}=\gamma$.\\
+All other states value  remains the same. 
+\item[5.] find $V^*(s)$ for $k=2$
+\begin{align*}
+&V^*_{(0)}=1\\
+\end{align*}
+
+\end{itemize}
+
+

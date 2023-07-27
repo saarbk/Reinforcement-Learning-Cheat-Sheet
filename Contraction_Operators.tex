@@ -1,0 +1,8 @@
+
+\begin{deff}
+ the operator $T$ is called a \df{contraction operator} if $\exists \beta \in (0,1) \forall v_1, v_2 \in \mathbb{R}^d . \|T(v_1) - T(v_2)\| \leq \beta\|v_1 - v_2\|$\end{deff}
+
+\begin{thm} let $T: \mathbb{R}^d \rightarrow \mathbb{R}^d$ be a contraction operator. Then
+{\color{blue}(1)} The equation $T(v) = v$ has a unique solution $V^{*} \in \mathbb{R}^d$\\
+    {\color{blue}(2)}  $\forall v_0 \in \mathbb{R}^d . \lim_{n\rightarrow\infty} T^n(v_0) = V^{*}$ . In fact, $\|T^n(v_0) - V^{*}\| \leq \mathcal{O}(\beta^n)$
+\end{thm}

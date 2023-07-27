@@ -1,0 +1,168 @@
+\documentclass[5pt]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[a3paper]{geometry}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\newtheorem*{claim*}{claim}
+\newtheorem{prop}{Proposition}
+\usepackage{mdframed}
+
+
+
+\newcommand{\V}{\mathcal{V}}
+
+% Packages
+\usepackage{amsthm}      % For theorem environments
+\usepackage[dvipsnames]{xcolor}
+
+% Custom theorem styles
+\newtheoremstyle{thmstyle}{2pt}{2pt}{}{}{\color{violet}}{}{ }{}
+\newtheoremstyle{lemstyle}{2pt}{2pt}{}{}{\color{Sepia}}{}{ }{}
+\newtheoremstyle{clmstyle}{2pt}{2pt}{}{}{\color{OliveGreen}}{}{ }{}
+\newtheoremstyle{corstyle}{2pt}{2pt}{}{}{\color{purple}}{}{ }{}
+\newtheoremstyle{lemmstyle}{2pt}{2pt}{}{}{\color{orange}}{}{ }{}
+
+% Apply the style and declare theorems
+\theoremstyle{thmstyle}
+\newtheorem*{thm}{\textbf{Theorem. }}
+\theoremstyle{lemstyle}
+\newtheorem*{lem}{\textbf{Lemma.}}
+\theoremstyle{clmstyle}
+\newtheorem*{clm}{\textbf{Claim.}}
+\theoremstyle{corstyle}
+\newtheorem*{cor}{\textbf{Corollary. }}
+\theoremstyle{lemstyle}
+\newtheorem*{lemm}{Lemma}
+
+
+% Define the theorem style 'deffstyle'
+\newtheoremstyle{deffstyle}% name
+  {0.5em}% space above
+  {0.5em}% space below
+  {\normalfont}% body font
+  {}% indent amount
+  {\color{BrickRed}}% theorem head font and color
+  {\textbf{.}}% punctuation after theorem head
+  { }% space after theorem head
+  {}% theorem head spec (can be left empty, meaning 'normal')
+\newcommand{\df}[1]{\underline{\color{BrickRed}\textbf{#1}}}
+% Use the 'deffstyle' for the 'deff'
+\newcommand{\dfi}[1]{{\color{BrickRed}\textit{\textbf{#1}}}}
+
+\theoremstyle{deffstyle}
+\newtheorem*{deff}{\textbf{Definition}}
+
+\renewcommand{\prop}{\textbf{Proposition: }}
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+	{ \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+
+% Turn off header and footer
+\pagestyle{empty}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{3}
+\setlength{\columnsep}{0.2cm}
+
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+\newcounter{subcount}
+\renewcommand{\thesubcount}{\arabic{subcount}}
+\makeatletter
+\@addtoreset{subcount}{section}
+\makeatother
+\usepackage{xcolor} % Required for custom colors
+\usepackage[explicit]{titlesec} 
+% Required for custom section titles
+\titleformat{\section}
+  {\normalfont\large\bfseries}{}{0em}
+  {\colorbox{black}{\parbox{\dimexpr\linewidth-2\fboxsep}{\textcolor{white}{\thesection\quad#1}}}}
+% Define the background color
+\definecolor{lightgrey}{RGB}{240,240,240}
+% Create a new environment for the algorithm
+\newenvironment{greyboxedalgorithm}
+{\small % Set the font size to small
+\begin{mdframed}[backgroundcolor=lightgrey]} % Create the grey box
+{\end{mdframed}}
+\usepackage{fontawesome5}
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols}{4}
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{0.2pt}
+\setlength{\postmulticols}{0.2pt}
+\setlength{\multicolsep}{0.2pt}
+\setlength{\columnsep}{0.2pt}
+\begin{center}
+     \Large{\textbf{Reinforcement Learning \large Cheat Sheet}} \vspace{0.1cm}
+
+     {\href{https://github.com/saarbk/Reinforcement-Learning-Cheat-Sheet}{{\Huge\faIcon{github} }}\\}  \vspace{0.1cm}
+     \small{\textit{Saar Barak} - TAU 2023 B}
+     \vspace{-0.2cm}
+\end{center}
+\section{RECAP}
+\input{RECAP}
+
+\section{Discrete Dynamic Systems}
+\input{Discrete_Dynamic_Systems}
+
+\section{DDP - Finite Horizon}
+\input{DDP_-_Finite_Horizon}
+
+\section{DDP - Average cost}
+\input{DDP_-_Average_cost}
+
+\section{MDP}
+\input{MDP}
+
+\section{Contraction Operators}
+\input{Contraction_Operators}
+
+\section{Model Based - Off policy}
+\input{Model_Based_--_Off_policy}
+
+\section{Model Based - On policy}
+\input{Model_Based_-_On_policy}
+
+
+%\section{Homework}
+%\input{Homework}
+\end{multicols}
+\end{document}

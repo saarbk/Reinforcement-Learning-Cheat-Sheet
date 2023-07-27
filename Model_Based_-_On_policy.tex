@@ -1,0 +1,103 @@
+
+\begin{deff}
+Model Based – On policy Learning DDP structure: given observed transition from $M$: obs = $\{(st, at, rt, st+1)\}_{t=1,...,T}$, define observed DDP $\hat{M}_T$: $\hat{f}(st, at) = st+1$, $\hat{r}(st, at) = rt$. For all $(s, a) \notin$ obs set $\hat{f}(s, a) = s$ and $\hat{r}(s, a) = RMax$.
+\end{deff}
+\begin{clm}
+$V_{\pi}(s; \hat{M}_T) \geq V_{\pi}(s; M)$
+\end{clm}
+
+\begin{greyboxedalgorithm}
+\vspace{-0.5cm}
+\begin{algorithm}[H]
+\caption{Leaning DDP:  }
+\begin{footnotesize}
+\begin{algorithmic}[1]
+\STATE at time $T$: compute $\hat{M}_T$, compute $\hat{\pi}_T^*$ the optimal policy for $\hat{M}_T$
+\STATE Let $a_T = \hat{\pi}_T(s_T)$. Do action $a_T$ and observe $r_T$ and $s_{T+1}$.
+\end{algorithmic}
+\end{footnotesize}
+\end{algorithm}
+\end{greyboxedalgorithm}
+\begin{clm}
+We change $\hat{M}_T$ at most $|S| \cdot |A|$ times.
+\end{clm}
+\pagebreak
+
+\begin{clm}
+Either we change $\hat{M}_T$ in some $t \in [T, T + |S|]$ or we never change $\hat{M}_T$.
+\end{clm}
+
+\begin{clm}
+After $|S|^2 |A|$ steps $\hat{\pi}_T^*$ is optimal.
+\end{clm}
+
+\begin{deff}
+Learning MDP Rmax: 
+
+(1) Initialize counter $\forall(s, a) \in S \times A$. $c(s, a) \leftarrow 0$ 
+
+(2) Initialize the empirical MDP $\hat{M}$ s.t $\hat{P}(s, a, s') = I(s' = s)$, $\hat{R}(s, a) = RMax$. 
+
+(3) For $t = 1,2, ...$ do: compute $\hat{\pi}_t^*$. Execute $at = \hat{\pi}_t^*(st)$. Act: receive reward $rt$ and $st+1$. $c(st, at) \leftarrow c(st, at) + 1$. If $(ct, at) = m$: redefine $\hat{P}(s, a, s') = \frac{count(s,a,s')}{count(s,a)}$,$\hat{R}(s, a) = \frac{\sum r (s,a,r,s')}{count(s,a)}$.
+\end{deff}
+
+\begin{clm}
+Number of times not $\varepsilon$-optimal at most $\frac{m|S||A|RMax}{\varepsilon(1-\gamma)}$
+\end{clm}
+
+\begin{deff}
+Learning MDP E3: Initialize the empirical MDP $\hat{M}$ s.t $\hat{P}(s, a, s') = I(s' = s)$, $\hat{R}(s, a) = 1$ all $(s, a)$ unknown.
+
+For $t = 1,2, ...$ do: compute $\hat{\pi}_t^*$. Execute $at = \hat{\pi}_t^*(st)$ receive reward $rt$ and $st+1$. If $(s, a) = m$: $(s, a)$ becomes known, $r(s, a) = 0$, $p(s'|s, a) = \hat{p}(s'|s, a)$. If expected return of $\hat{\pi}_t^* \leq \frac{\varepsilon}{2}$ DONE and set $r(s, a) = \hat{r}(s, a)$ compute $\hat{\pi}^*$
+
+Model Free – Off policy
+\end{deff}
+
+\begin{deff}
+Q learning DDP algorithm: 
+
+(1) Initialization: arbitrary $Q_0(s, a) = 0$ 
+
+(2) Observe $(st, at, rt, st+1)$ 
+
+(3) Update $Q_{t+1}(st, at) = rt + \gamma \max_{a \in A}\{Q_t(st+1, a)\}$
+\end{deff}
+
+\begin{thm}
+Assume every $(s, a)$ occurs infinitely often then $\lim_{t \to \infty} Q_t(s, a) = Q^*(s, a) = r(s, a) +$
+$ \gamma \max_{a'} Q^*(f(s, a), a')$
+\end{thm}
+
+\begin{deff}
+Q learning MDP algorithm: 
+
+(1) Initialization: arbitrary $Q_0(s, a) = 0$ 
+
+(2) Observe $(st, at, rt, st+1)$ 
+
+(3) Update $Q_{t+1}(st, at) = Q_t(st, at) + \alpha_t(st, a_T)\Gamma_t$ where $\Gamma_t = rt + \gamma \max_{a \in A}\{Q_t(st+1, a)\} - Q_t(st, at)$
+\end{deff}
+
+\begin{thm}
+Assume every $(s, a)$ performed infinitely often, and $\forall(s, a). \sum \alpha_t(s, a) t I(st = s, at = a) = \infty \land \sum \alpha_t^2(s, a) t I(st = s, at = a) = O(1)$ then $P[\lim_{t \to \infty} Q_t(s, a) = Q^*(s, a)] = 1$
+\end{thm}
+
+\begin{deff}
+Q learning convergence: 
+$Hq(s, a) = \sum p(s' |s, a) [r(s, a) + \gamma \max_{a'\in A} q(s', a')]$
+Let $
+\phi_t = r_t + \gamma \max_{a'}Qt(st+1 , a')$.\\
+This implies that $
+E[\phi_t] = (HQt)(st , at).$
+We can define the noise term as \\
+$\omega_t(st , at) = \phi_t - (HQt)(st , at)
+$
+\\and have $
+E[\omega_t(st , at)] = 0$.
+In addition $
+|\omega_t(st , at)| \leq VMax = \frac{RMax}{1-\gamma}.$
+We can now rewrite the Q-learning, as follows: 
+\begin{align*}
+Qt+1(st , at) := &(1 - \alpha_t(st , at))Qt(st , at)  \alpha_t(st , at)\\&[(HQt)(st , at) + \omega_t(st , at)]
+\end{align*}
+\end{deff}
