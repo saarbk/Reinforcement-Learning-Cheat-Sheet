@@ -1,8 +1,8 @@
 ---
 
-# Reinforcement Learning Cheat Sheet 🎓
+# Reinforcement Learning Toolkit 🎓
 
-An extensive, easily-referenced cheat sheet for reinforcement learning, developed as part of the TAU-23 course.
+An extensive, easily-referenced Toolkit for reinforcement learning, developed as part of the TAU-23 course.
 
 This repository contains a comprehensive set of reference documents for the course, organized into individual LaTeX files for each main topic. This allows for quick access to specific sections when you need to brush up on a particular topic.
 
